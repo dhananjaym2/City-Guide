@@ -3,6 +3,7 @@ package city.guide
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -14,6 +15,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var playAndStop_FloatingActionButton: FloatingActionButton
+    private var LOG_TAG: String = this.javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        playAndStop_FloatingActionButton = findViewById<FloatingActionButton>(R.id.playAndStop_FloatingActionButton)
+        playAndStop_FloatingActionButton.setOnClickListener({
+            Log.v(LOG_TAG, "playAndStop_FloatingActionButton clicked")
+            //if not started call API to fetch next lat long else stop the API calls.
+        })
     }
 
     /**

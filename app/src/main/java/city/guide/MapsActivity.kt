@@ -3,7 +3,7 @@ package city.guide
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import city.guide.utils.v
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,7 +27,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         playAndStop_FloatingActionButton = findViewById<FloatingActionButton>(R.id.playAndStop_FloatingActionButton)
         playAndStop_FloatingActionButton.setOnClickListener({
-            Log.v(LOG_TAG, "playAndStop_FloatingActionButton clicked")
+            v(LOG_TAG, "playAndStop_FloatingActionButton clicked")
             //if not started call API to fetch next lat long else stop the API calls.
         })
     }

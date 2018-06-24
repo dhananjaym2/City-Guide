@@ -7,12 +7,9 @@ import android.util.Log
  * Created by vvdn on 23/6/18.
  */
 
-class LogUtil {
+private val isLogEnabled: Boolean = true
 
-    private val isLogEnabled: Boolean = true
-
-    fun v(logTag: String, logMessageToPrint: String) {
-        takeIf { isLogEnabled }
+fun v(logTag: String, logMessageToPrint: String) {
+    if (isLogEnabled)
         Log.v(logTag, logMessageToPrint)
-    }
 }

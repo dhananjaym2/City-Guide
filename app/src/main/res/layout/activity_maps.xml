@@ -12,6 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/margin_fab_play_pause"
-        android:src="@android:drawable/ic_media_play" />
+        android:src="@drawable/ic_play_arrow_black_24dp" />
     <!--app:rippleColor=""-->
 </fragment>

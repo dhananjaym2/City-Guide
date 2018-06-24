@@ -3,7 +3,9 @@ package city.guide
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import city.guide.network.isConnectedToWiFi
 import city.guide.utils.v
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -35,20 +37,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             //if not started call API to fetch next lat long else stop the API calls.
 
-            val imageDrawableToShow: Int
-            if (isPlaying) {
-                imageDrawableToShow = R.drawable.ic_play_arrow_white_24dp
+            if (isConnectedToWiFi(this)) {
+
+                val imageDrawableToShow: Int
+                if (isPlaying) {
+                    imageDrawableToShow = R.drawable.ic_play_arrow_white_24dp
+                } else {
+                    imageDrawableToShow = R.drawable.ic_crop_square_white_24dp
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    playAndStop_FloatingActionButton.setImageDrawable(resources.getDrawable(imageDrawableToShow, theme))
+                } else {
+                    playAndStop_FloatingActionButton.setImageDrawable(resources.getDrawable(imageDrawableToShow))
+                }
+
+                isPlaying = !isPlaying
             } else {
-                imageDrawableToShow = R.drawable.ic_crop_square_white_24dp
+                Snackbar.make(playAndStop_FloatingActionButton, getString(R.string.PleaseConnectToTheWiFiNetworkWhichHasTheAppServerRunningOnIt), Snackbar.LENGTH_LONG).show()
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                playAndStop_FloatingActionButton.setImageDrawable(resources.getDrawable(imageDrawableToShow, theme))
-            } else {
-                playAndStop_FloatingActionButton.setImageDrawable(resources.getDrawable(imageDrawableToShow))
-            }
-            
-            isPlaying = !isPlaying
         })
     }
 
@@ -64,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
+        // Add a marker in Jodhpur and move the camera
         mMap.addMarker(MarkerOptions().position(jodhpurLatLng).title(getString(R.string.MarkerInJodhpur)))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(jodhpurLatLng))
     }

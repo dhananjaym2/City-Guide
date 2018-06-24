@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">City Guide</string>
     <string name="MarkerInJodhpur">Marker in Jodhpur</string>
+    <string name="PleaseConnectToTheWiFiNetworkWhichHasTheAppServerRunningOnIt">Please connect this device to the WiFi network which has the app server running on it.</string>
 </resources>

@@ -1,5 +1,6 @@
 package city.guide
 
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
@@ -16,6 +17,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var playAndStop_FloatingActionButton: FloatingActionButton
     private var LOG_TAG: String = this.javaClass.simpleName
+    private var isPlaying: Boolean = false
+    private val jodhpurLatLng = LatLng(26.2703357, 72.9603309)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +28,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        playAndStop_FloatingActionButton = findViewById<FloatingActionButton>(R.id.playAndStop_FloatingActionButton)
+        playAndStop_FloatingActionButton = findViewById(R.id.playAndStop_FloatingActionButton)
         playAndStop_FloatingActionButton.setOnClickListener({
-            v(LOG_TAG, "playAndStop_FloatingActionButton clicked")
+
+            v(LOG_TAG, "playAndStop_FloatingActionButton clicked isPlaying:" + isPlaying)
+
             //if not started call API to fetch next lat long else stop the API calls.
+
+            val imageDrawableToShow: Int
+            if (isPlaying) {
+                imageDrawableToShow = R.drawable.ic_play_arrow_white_24dp
+            } else {
+                imageDrawableToShow = R.drawable.ic_crop_square_white_24dp
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                playAndStop_FloatingActionButton.setImageDrawable(resources.getDrawable(imageDrawableToShow, theme))
+            } else {
+                playAndStop_FloatingActionButton.setImageDrawable(resources.getDrawable(imageDrawableToShow))
+            }
+            
+            isPlaying = !isPlaying
         })
     }
 
@@ -45,8 +65,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.addMarker(MarkerOptions().position(jodhpurLatLng).title(getString(R.string.MarkerInJodhpur)))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(jodhpurLatLng))
     }
 }
